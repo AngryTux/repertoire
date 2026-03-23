@@ -1,0 +1,9 @@
+kind: Formation
+version: 1
+metadata:
+  name: solo
+  description: "Single workspace, single musician"
+min_sections: 1
+max_sections: 1
+parallel: false
+consolidation: passthrough

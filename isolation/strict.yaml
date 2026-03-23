@@ -1,0 +1,43 @@
+kind: IsolationProfile
+version: 1
+metadata:
+  name: strict
+  description: "Maximum isolation for sensitive workloads"
+  risk: minimal
+namespaces:
+  user: true
+  pid: true
+  mount: true
+  network: false
+landlock:
+  filesystem:
+    enabled: true
+    read: ["${workspace_dir}"]
+    write: ["${tmpdir}"]
+  network:
+    enabled: true
+    tcp_connect: ["${provider_endpoints}"]
+    tcp_bind: deny
+  ipc:
+    enabled: true
+    scope: isolated
+  signal:
+    enabled: true
+    scope: isolated
+seccomp:
+  enabled: true
+  profile: strict
+cgroup:
+  enabled: true
+  cpu: "0.5"
+  memory: "256M"
+  pids: 5
+environment:
+  clean: true
+  credential_inject: true
+  allowed_vars: ["PATH"]
+spawn:
+  close_range: true
+  tmpdir_isolated: true
+  openat2_beneath: true
+  dns_preresolve: true

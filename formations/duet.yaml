@@ -1,0 +1,9 @@
+kind: Formation
+version: 1
+metadata:
+  name: duet
+  description: "Two workspaces in parallel, consolidated"
+min_sections: 2
+max_sections: 2
+parallel: true
+consolidation: required

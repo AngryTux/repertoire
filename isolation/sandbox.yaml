@@ -1,0 +1,43 @@
+kind: IsolationProfile
+version: 1
+metadata:
+  name: sandbox
+  description: "Standard isolation for daily use"
+  risk: low
+namespaces:
+  user: true
+  pid: true
+  mount: true
+  network: false
+landlock:
+  filesystem:
+    enabled: true
+    read: ["${workspace_dir}"]
+    write: ["${tmpdir}"]
+  network:
+    enabled: true
+    tcp_connect: ["${provider_endpoints}"]
+    tcp_bind: deny
+  ipc:
+    enabled: true
+    scope: isolated
+  signal:
+    enabled: true
+    scope: isolated
+seccomp:
+  enabled: true
+  profile: default
+cgroup:
+  enabled: true
+  cpu: "1.0"
+  memory: "512M"
+  pids: 10
+environment:
+  clean: true
+  credential_inject: true
+  allowed_vars: ["PATH", "HOME", "TERM"]
+spawn:
+  close_range: true
+  tmpdir_isolated: true
+  openat2_beneath: true
+  dns_preresolve: true
